@@ -11,6 +11,13 @@ const recommendationsApi = api.injectEndpoints({
       }),
       invalidatesTags: ["RECOMMENDATIONS"],
     }),
+    deleteRecommendation: build.mutation<any, string>({
+      query: (id: string) => ({
+        url: `${base}/${id}/delete`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["RECOMMENDATIONS"],
+    }),
     getRecommendations: build.query<any, void>({
       query: () => ({
         url: `${base}`,
@@ -21,5 +28,8 @@ const recommendationsApi = api.injectEndpoints({
   }),
 });
 
-export const { useApproveRecommendationMutation, useGetRecommendationsQuery } =
-  recommendationsApi;
+export const {
+  useApproveRecommendationMutation,
+  useGetRecommendationsQuery,
+  useDeleteRecommendationMutation,
+} = recommendationsApi;

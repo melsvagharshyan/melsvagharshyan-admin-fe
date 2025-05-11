@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   useGetRecommendationsQuery,
   useApproveRecommendationMutation,
+  useDeleteRecommendationMutation,
 } from "../app/recommendations/recommendations.api";
 
 const defaultAvatar =
@@ -16,7 +17,10 @@ const RecommendationsList: React.FC = () => {
   } = useGetRecommendationsQuery();
 
   const [approveRecommendation] = useApproveRecommendationMutation();
+  const [deleteRecommendation] = useDeleteRecommendationMutation();
+
   const [approvingId, setApprovingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"pending" | "approved">("pending");
 
   const handleApprove = async (_id: string) => {
@@ -28,6 +32,18 @@ const RecommendationsList: React.FC = () => {
       console.error("Approval failed", err);
     } finally {
       setApprovingId(null);
+    }
+  };
+
+  const handleDelete = async (_id: string) => {
+    try {
+      setDeletingId(_id);
+      await deleteRecommendation(_id).unwrap();
+      refetch();
+    } catch (err) {
+      console.error("Delete failed", err);
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -102,6 +118,14 @@ const RecommendationsList: React.FC = () => {
                   : "Approve"}
               </button>
             )}
+
+            <button
+              onClick={() => handleDelete(recommendation._id)}
+              disabled={deletingId === recommendation._id}
+              className="px-4 py-1.5 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 transition disabled:opacity-50"
+            >
+              {deletingId === recommendation._id ? "Deleting..." : "Delete"}
+            </button>
           </div>
         </div>
       </div>
