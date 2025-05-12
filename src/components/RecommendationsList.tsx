@@ -4,6 +4,7 @@ import {
   useApproveRecommendationMutation,
   useDeleteRecommendationMutation,
 } from "../app/recommendations/recommendations.api";
+import type { Recommendation } from "../app/recommendations/recommendation.types";
 
 const defaultAvatar =
   "https://res.cloudinary.com/dxfqf6fgv/image/upload/v1746967371/orig_sxg7yl.svg";
@@ -64,20 +65,20 @@ const RecommendationsList: React.FC = () => {
   }
 
   const approvedRecommendations = recommendations?.data?.filter(
-    (rec: any) => rec.approved
+    (rec: Recommendation) => rec.approved
   );
   const pendingRecommendations = recommendations?.data?.filter(
-    (rec: any) => !rec.approved
+    (rec: Recommendation) => !rec.approved
   );
 
-  const renderRecommendation = (recommendation: any) => (
+  const renderRecommendation = (recommendation: Recommendation) => (
     <li
       key={recommendation._id}
       className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow"
     >
       <div className="flex flex-col md:flex-row md:items-center gap-4">
         <img
-          src={recommendation?.image || defaultAvatar}
+          src={recommendation?.image?.url || defaultAvatar}
           alt={`${recommendation.fullName}'s image`}
           className="w-24 h-24 rounded-full object-cover"
         />
@@ -164,9 +165,9 @@ const RecommendationsList: React.FC = () => {
         </button>
       </div>
 
-      {activeList?.length > 0 ? (
+      {(activeList ?? []).length > 0 ? (
         <ul className="space-y-6">
-          {activeList.map((rec: any) => renderRecommendation(rec))}
+          {(activeList ?? []).map((rec) => renderRecommendation(rec))}
         </ul>
       ) : (
         <p className="text-center text-gray-500">No {activeTab} items.</p>
