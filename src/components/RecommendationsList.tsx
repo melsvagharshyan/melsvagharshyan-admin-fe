@@ -112,7 +112,7 @@ const RecommendationsList: React.FC = () => {
               <button
                 onClick={() => handleApprove(recommendation._id)}
                 disabled={approvingId === recommendation._id}
-                className="px-4 py-1.5 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition disabled:opacity-50"
+                className="px-4 py-1.5 cursor-pointer bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition disabled:opacity-50"
               >
                 {approvingId === recommendation._id
                   ? "Approving..."
@@ -123,7 +123,7 @@ const RecommendationsList: React.FC = () => {
             <button
               onClick={() => handleDelete(recommendation._id)}
               disabled={deletingId === recommendation._id}
-              className="px-4 py-1.5 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 transition disabled:opacity-50"
+              className="px-4 py-1.5 cursor-pointer bg-red-600 text-white text-sm rounded-md hover:bg-red-700 transition disabled:opacity-50"
             >
               {deletingId === recommendation._id ? "Deleting..." : "Delete"}
             </button>
