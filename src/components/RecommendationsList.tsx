@@ -112,20 +112,26 @@ const RecommendationsList: React.FC = () => {
               <button
                 onClick={() => handleApprove(recommendation._id)}
                 disabled={approvingId === recommendation._id}
-                className="px-4 py-1.5 cursor-pointer bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition disabled:opacity-50"
+                className="px-4 py-1.5 cursor-pointer min-w-[75px] bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition disabled:opacity-50"
               >
-                {approvingId === recommendation._id
-                  ? "Approving..."
-                  : "Approve"}
+                {approvingId === recommendation._id ? (
+                  <div className="w-4 h-4 border-2 m-auto border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  "Approve"
+                )}
               </button>
             )}
 
             <button
               onClick={() => handleDelete(recommendation._id)}
               disabled={deletingId === recommendation._id}
-              className="px-4 py-1.5 cursor-pointer bg-red-600 text-white text-sm rounded-md hover:bg-red-700 transition disabled:opacity-50"
+              className="px-4 py-1.5 cursor-pointer min-w-[75px] bg-red-500 text-white text-sm rounded-md hover:bg-red-600 transition disabled:opacity-50 flex items-center justify-center"
             >
-              {deletingId === recommendation._id ? "Deleting..." : "Delete"}
+              {deletingId === recommendation._id ? (
+                <div className="w-4 h-4 border-2 m-auto border-white border-t-transparent rounded-full animate-spin" />
+              ) : (
+                "Delete"
+              )}
             </button>
           </div>
         </div>
